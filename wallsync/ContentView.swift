@@ -46,11 +46,27 @@ struct ContentView: View {
                                 self.setWall(imageUrl:imageUrl)
                             }){
                                 
-                                AsyncImage(url:imageUrl) { image in
-                                    image.resizable().aspectRatio(contentMode: .fit).transition(.slide)
-                                } placeholder: {
-                                    ProgressView().frame(minWidth:300,minHeight: 200)
-                                }.aspectRatio( contentMode: .fit).cornerRadius(6)
+                                AsyncImage(
+                                            url: imageUrl
+                                        ) { phase in
+                                            switch phase {
+                                            case .empty:
+                                                ProgressView().frame(width: 300, height: 200)
+                                            case .success(let image):
+                                                image
+                                                    .resizable()
+                                            case .failure:
+                                                Image(systemName: "exclamationmark.triangle")
+                                                    .resizable()
+                                                    .padding(100)
+                                            @unknown default:
+                                                EmptyView()
+                                            }
+                                        }
+
+                                .aspectRatio( contentMode: .fit)
+                                .cornerRadius(6)
+                                
                                 
                             }.buttonStyle(PlainButtonStyle())
                                 .padding(EdgeInsets(top: 10, leading: 10, bottom: 0, trailing: 10))

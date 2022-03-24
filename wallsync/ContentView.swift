@@ -8,78 +8,115 @@
 import SwiftUI
 import CoreData
 
+
+
+class SelectedFolder:ObservableObject {
+    @Published var foldername = "<none>"
+}
+
+extension Binding {
+    func onChange(_ handler: @escaping (Value) -> Void) -> Binding<Value> {
+        Binding(
+            get: { self.wrappedValue },
+            set: { newValue in
+                self.wrappedValue = newValue
+                handler(newValue)
+            }
+        )
+    }
+}
+
+
 struct ContentView: View {
-    @Environment(\.managedObjectContext) private var viewContext
-
-    @FetchRequest(
-        sortDescriptors: [NSSortDescriptor(keyPath: \Item.timestamp, ascending: true)],
-        animation: .default)
-    private var items: FetchedResults<Item>
-
+    @StateObject var selectedFolder=SelectedFolder()
+    @State var images=[URL]();
+    
     var body: some View {
-        NavigationView {
-            List {
-                ForEach(items) { item in
-                    NavigationLink {
-                        Text("Item at \(item.timestamp!, formatter: itemFormatter)")
-                    } label: {
-                        Text(item.timestamp!, formatter: itemFormatter)
+        
+        VStack{
+            if(images.count == 0){
+                Text("Select a folder to scan").font(.title).foregroundColor(.gray)
+            }else{
+                ScrollView{
+                    LazyVStack{
+                        
+                        ForEach(images, id: \.self) { imageUrl in
+                            
+                            Button(action:{
+                                self.setWall(imageUrl:imageUrl)
+                            }){
+                                
+                                AsyncImage(url:imageUrl) { image in
+                                    image.resizable().aspectRatio(contentMode: .fit).transition(.slide)
+                                } placeholder: {
+                                    ProgressView().frame(minWidth:300,minHeight: 200)
+                                }.aspectRatio( contentMode: .fit).cornerRadius(6)
+                                
+                            }.buttonStyle(PlainButtonStyle())
+                                .padding(EdgeInsets(top: 10, leading: 10, bottom: 0, trailing: 10))
+                            
+                        }
+                        
                     }
-                }
-                .onDelete(perform: deleteItems)
-            }
-            .toolbar {
-                ToolbarItem {
-                    Button(action: addItem) {
-                        Label("Add Item", systemImage: "plus")
-                    }
-                }
-            }
-            Text("Select an item")
-        }
-    }
-
-    private func addItem() {
-        withAnimation {
-            let newItem = Item(context: viewContext)
-            newItem.timestamp = Date()
-
-            do {
-                try viewContext.save()
-            } catch {
-                // Replace this implementation with code to handle the error appropriately.
-                // fatalError() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
-                let nsError = error as NSError
-                fatalError("Unresolved error \(nsError), \(nsError.userInfo)")
+                    
+                }.padding(EdgeInsets(top:10, leading: 0, bottom: 0, trailing: 0))
             }
         }
-    }
-
-    private func deleteItems(offsets: IndexSet) {
-        withAnimation {
-            offsets.map { items[$0] }.forEach(viewContext.delete)
-
-            do {
-                try viewContext.save()
-            } catch {
-                // Replace this implementation with code to handle the error appropriately.
-                // fatalError() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
-                let nsError = error as NSError
-                fatalError("Unresolved error \(nsError), \(nsError.userInfo)")
-            }
+        
+        .frame(minWidth:500,minHeight:500)
+        .toolbar{
+            Spacer()
+            FolderSelector(selectedFolder:selectedFolder,onChange:{
+                self.images=[]
+                self.searchForImages()
+            })
         }
     }
+    
+    
+    func setWall(imageUrl:URL){
+        var options = [NSWorkspace.DesktopImageOptionKey: Any]()
+        
+        options[.imageScaling] = NSImageScaling.scaleProportionallyUpOrDown.rawValue
+        options[.allowClipping] = true
+        
+        for screen in NSScreen.screens{
+            try! NSWorkspace.shared.setDesktopImageURL(imageUrl, for: screen, options: options)
+        }
+    }
+    
+    func searchForImages(){
+        let path = self.selectedFolder.foldername;
+        let fm = FileManager.default
+        let items = try! fm.contentsOfDirectory(atPath: path)
+        
+        for item in items {
+            if(item.hasSuffix(".jpg")){
+                let fileUrl = URL(fileURLWithPath:path.appending("/"+item))
+                self.images.append(fileUrl)
+            }
+        }
+        
+        self.images = self.images.sorted {
+            
+            let c1 = $0.pathComponents.count - 1
+            let c2 = $1.pathComponents.count - 1
+            
+            
+            let v1 = $0.pathComponents[c1].components(separatedBy: ".")
+            let v2 = $1.pathComponents[c2].components(separatedBy: ".")
+            
+            
+            
+            return (Int(v1[0]) ?? -1) < (Int(v2[0]) ?? -1)
+            
+        }
+        
+    }
+    
+    
+    
 }
 
-private let itemFormatter: DateFormatter = {
-    let formatter = DateFormatter()
-    formatter.dateStyle = .short
-    formatter.timeStyle = .medium
-    return formatter
-}()
 
-struct ContentView_Previews: PreviewProvider {
-    static var previews: some View {
-        ContentView().environment(\.managedObjectContext, PersistenceController.preview.container.viewContext)
-    }
-}
+

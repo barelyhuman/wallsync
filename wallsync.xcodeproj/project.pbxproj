@@ -11,8 +11,7 @@
 		1F6028B127EB4736004EC720 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F6028B027EB4736004EC720 /* ContentView.swift */; };
 		1F6028B327EB4737004EC720 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1F6028B227EB4737004EC720 /* Assets.xcassets */; };
 		1F6028B627EB4737004EC720 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1F6028B527EB4737004EC720 /* Preview Assets.xcassets */; };
-		1F6028B827EB4737004EC720 /* Persistence.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F6028B727EB4737004EC720 /* Persistence.swift */; };
-		1F6028BB27EB4737004EC720 /* wallsync.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 1F6028B927EB4737004EC720 /* wallsync.xcdatamodeld */; };
+		1F6028C627EB575C004EC720 /* FolderSelector.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F6028C527EB575C004EC720 /* FolderSelector.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -21,9 +20,8 @@
 		1F6028B027EB4736004EC720 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		1F6028B227EB4737004EC720 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		1F6028B527EB4737004EC720 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
-		1F6028B727EB4737004EC720 /* Persistence.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Persistence.swift; sourceTree = "<group>"; };
-		1F6028BA27EB4737004EC720 /* wallsync.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = wallsync.xcdatamodel; sourceTree = "<group>"; };
 		1F6028BC27EB4737004EC720 /* wallsync.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = wallsync.entitlements; sourceTree = "<group>"; };
+		1F6028C527EB575C004EC720 /* FolderSelector.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FolderSelector.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -59,10 +57,9 @@
 				1F6028AE27EB4736004EC720 /* wallsyncApp.swift */,
 				1F6028B027EB4736004EC720 /* ContentView.swift */,
 				1F6028B227EB4737004EC720 /* Assets.xcassets */,
-				1F6028B727EB4737004EC720 /* Persistence.swift */,
 				1F6028BC27EB4737004EC720 /* wallsync.entitlements */,
-				1F6028B927EB4737004EC720 /* wallsync.xcdatamodeld */,
 				1F6028B427EB4737004EC720 /* Preview Content */,
+				1F6028C527EB575C004EC720 /* FolderSelector.swift */,
 			);
 			path = wallsync;
 			sourceTree = "<group>";
@@ -91,6 +88,8 @@
 			dependencies = (
 			);
 			name = wallsync;
+			packageProductDependencies = (
+			);
 			productName = wallsync;
 			productReference = 1F6028AB27EB4736004EC720 /* wallsync.app */;
 			productType = "com.apple.product-type.application";
@@ -119,6 +118,8 @@
 				Base,
 			);
 			mainGroup = 1F6028A227EB4736004EC720;
+			packageReferences = (
+			);
 			productRefGroup = 1F6028AC27EB4736004EC720 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -145,10 +146,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				1F6028B827EB4737004EC720 /* Persistence.swift in Sources */,
 				1F6028B127EB4736004EC720 /* ContentView.swift in Sources */,
-				1F6028BB27EB4737004EC720 /* wallsync.xcdatamodeld in Sources */,
 				1F6028AF27EB4736004EC720 /* wallsyncApp.swift in Sources */,
+				1F6028C627EB575C004EC720 /* FolderSelector.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -346,19 +346,6 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
-
-/* Begin XCVersionGroup section */
-		1F6028B927EB4737004EC720 /* wallsync.xcdatamodeld */ = {
-			isa = XCVersionGroup;
-			children = (
-				1F6028BA27EB4737004EC720 /* wallsync.xcdatamodel */,
-			);
-			currentVersion = 1F6028BA27EB4737004EC720 /* wallsync.xcdatamodel */;
-			path = wallsync.xcdatamodeld;
-			sourceTree = "<group>";
-			versionGroupType = wrapper.xcdatamodel;
-		};
-/* End XCVersionGroup section */
 	};
 	rootObject = 1F6028A327EB4736004EC720 /* Project object */;
 }

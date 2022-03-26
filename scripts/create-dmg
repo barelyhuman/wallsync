@@ -1,5 +1,6 @@
 #!/bin/bash 
 
+set -euxo pipefail
 
 rm -rf ./build
 
@@ -10,7 +11,9 @@ xcodebuild archive \
 
 cp -r ./build/Release/wallsync.app ./build
 
-npx appdmg create-dmg.json ./build/wallsync.dmg
+VERSION=$(cat .commitlog.release | xargs)
+
+npx appdmg create-dmg.json "./build/wallsync-$VERSION.dmg"
 
 
 

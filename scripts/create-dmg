@@ -1,0 +1,16 @@
+#!/bin/bash 
+
+
+rm -rf ./build
+
+xcodebuild archive \
+--scheme=wallsync \
+-destination "generic/platform=macOS" \
+-archivePath="./build"
+
+cp -r ./build/Release/wallsync.app ./build
+
+npx appdmg create-dmg.json ./build/wallsync.dmg
+
+
+

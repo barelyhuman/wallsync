@@ -107,7 +107,7 @@ struct ContentView: View {
         let items = try! fm.contentsOfDirectory(atPath: path)
         
         for item in items {
-            if(item.hasSuffix(".jpg")){
+            if(item.hasSuffix(".jpg") || item.hasSuffix(".jpeg") || item.hasSuffix(".png")){
                 let fileUrl = URL(fileURLWithPath:path.appending("/"+item))
                 self.images.append(fileUrl)
             }

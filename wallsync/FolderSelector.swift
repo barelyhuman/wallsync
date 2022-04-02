@@ -18,7 +18,6 @@ struct FolderSelector: View {
     
     var body: some View {
         Button(action:self.selectFolder) {
-                Image(systemName: "folder.fill")
             Text("Choose Folder")
         }
     }

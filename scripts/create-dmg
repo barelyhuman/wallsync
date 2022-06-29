@@ -7,7 +7,7 @@ rm -rf ./build
 xcodebuild archive \
 --scheme=wallsync \
 -destination "generic/platform=macOS" \
--archivePath="./build"
+-archivePath="./build" CODE_SIGN_IDENTITY="" CODE_SIGNING_REQUIRED=NO CODE_SIGNING_ALLOWED=NO
 
 cp -r ./build/Release/wallsync.app ./build
 

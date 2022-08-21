@@ -192,42 +192,21 @@ struct ContentView: View {
             }
         }
     }
+
     
     func searchForImages(){
         let path = self.selectedFolder.foldername;
-        let fm = FileManager.default
-        let items = try! fm.contentsOfDirectory(atPath: path)
-        
-        
-        for item in items {
-            
-            
-            if(item.hasSuffix(".jpg") || item.hasSuffix(".jpeg") || item.hasSuffix(".png")){
-                let fileUrl = URL(fileURLWithPath:path.appending("/"+item))
-                
-                do {
-                    let attr = try FileManager.default.attributesOfItem(atPath: fileUrl.path)
-                    let fileSize = attr[FileAttributeKey.size] as! UInt64
-                    let creationDate = attr[.creationDate] as! Date
-                    
-                    self.images.append(
-                        ImageCollection(
-                            url: fileUrl,
-                            size: fileSize,
-                            createdOn: creationDate
-                        )
-                    )
-                } catch {
-                    print("Error info: \(error)")
-                    self.hasError = true
-                    self.errorMessage = "Failed to open the folder"
-                }
-                
-                
-            }
+        var images = [ImageCollection]()
+        do{
+            images = try recursiveDirectorySearch(path: path)
+        }catch {
+            print("Error info: \(error)")
+            self.hasError = true
+            self.errorMessage = "Failed to open the folder"
         }
         
-        self.images = self.images.sorted { itemA,itemB in
+        
+        self.images = images.sorted { itemA,itemB in
             return sortByName(itemA:itemA,itemB: itemB,direction: 1)
         }
         

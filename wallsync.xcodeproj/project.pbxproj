@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1F1F984128B27AB8009CDD84 /* RecursiveSearch.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F1F984028B27AB8009CDD84 /* RecursiveSearch.swift */; };
 		1F6028AF27EB4736004EC720 /* wallsyncApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F6028AE27EB4736004EC720 /* wallsyncApp.swift */; };
 		1F6028B127EB4736004EC720 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F6028B027EB4736004EC720 /* ContentView.swift */; };
 		1F6028B327EB4737004EC720 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1F6028B227EB4737004EC720 /* Assets.xcassets */; };
@@ -15,6 +16,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		1F1F984028B27AB8009CDD84 /* RecursiveSearch.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RecursiveSearch.swift; sourceTree = "<group>"; };
 		1F6028AB27EB4736004EC720 /* wallsync.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = wallsync.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		1F6028AE27EB4736004EC720 /* wallsyncApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = wallsyncApp.swift; sourceTree = "<group>"; };
 		1F6028B027EB4736004EC720 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -56,6 +58,7 @@
 			children = (
 				1F6028AE27EB4736004EC720 /* wallsyncApp.swift */,
 				1F6028B027EB4736004EC720 /* ContentView.swift */,
+				1F1F984028B27AB8009CDD84 /* RecursiveSearch.swift */,
 				1F6028B227EB4737004EC720 /* Assets.xcassets */,
 				1F6028BC27EB4737004EC720 /* wallsync.entitlements */,
 				1F6028B427EB4737004EC720 /* Preview Content */,
@@ -148,6 +151,7 @@
 			files = (
 				1F6028B127EB4736004EC720 /* ContentView.swift in Sources */,
 				1F6028AF27EB4736004EC720 /* wallsyncApp.swift in Sources */,
+				1F1F984128B27AB8009CDD84 /* RecursiveSearch.swift in Sources */,
 				1F6028C627EB575C004EC720 /* FolderSelector.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

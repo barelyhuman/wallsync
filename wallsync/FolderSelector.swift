@@ -25,6 +25,7 @@ struct FolderSelector: View {
     
     func selectFolder() {
         let panel = NSOpenPanel()
+                panel.canChooseFiles = false
                 panel.allowsMultipleSelection = false
                 panel.canChooseDirectories = true
                 if panel.runModal() == .OK {

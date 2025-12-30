@@ -52,6 +52,7 @@ struct ContentView: View {
     @State var sizeSort = 1
     @State var hasError = false
     @State var errorMessage=""
+    @State private var activeAccessedURL: URL? = nil
 
     var folders = RecentFolders.list()
     
@@ -59,20 +60,17 @@ struct ContentView: View {
         ScrollViewReader{scrollProxy in
             VStack{
                 if(images.count == 0){
-                    Text("Select a folder to scan").font(.title).foregroundColor(.gray)
-
-                    ForEach(folders, id: \.self) { folder in
+                    if(folders.count == 0){
+                        Text("Select a folder to scan").font(.title).foregroundColor(.gray)
+                    }else{
+                        ForEach(folders, id: \.self) { folder in
                         Button(action:{
-                            folder.startAccessingSecurityScopedResource()
                             self.selectedFolder.foldername = folder.path
-                            self.images = []
-                            self.searchForImages()
-                            RecentFolders.add(url: folder)
                         }){
                             Text(folder.path).frame(maxWidth: .infinity, alignment: .leading).padding(EdgeInsets(top: 5, leading: 10, bottom: 5, trailing: 10))
                         }.buttonStyle(PlainButtonStyle())
                     }
-
+                    }
                 }else{
                     ScrollView{
                         LazyVStack{
@@ -116,13 +114,38 @@ struct ContentView: View {
                         }
                         .padding(EdgeInsets(top:10, leading: 0, bottom: 0, trailing: 0))
                     }
-                    .onReceive(selectedFolder.$foldername) { (value) in
-                        guard !value.isEmpty else { return }
-                        
-                        toTop(scroller:scrollProxy)
-                    }
                     
                 }
+            }
+            .onChange(of: selectedFolder.foldername) { newValue in
+                // Stop previous access if any
+                if let prev = activeAccessedURL, prev.path != newValue {
+                    prev.stopAccessingSecurityScopedResource()
+                    activeAccessedURL = nil
+                }
+
+                guard !newValue.isEmpty, newValue != "<none>" else {
+                    return
+                }
+
+                let url = URL(fileURLWithPath: newValue)
+                // If already active, nothing to do
+                if activeAccessedURL?.path == url.path { return }
+
+                // Attempt to start security-scoped access and show an error on failure
+                guard url.startAccessingSecurityScopedResource() else {
+                    DispatchQueue.main.async {
+                        self.hasError = true
+                        self.errorMessage = "Failed to gain access to the selected folder."
+                    }
+                    return
+                }
+
+                activeAccessedURL = url
+
+                // Trigger a fresh scan now that access is held
+                self.images = []
+                self.searchForImages()
             }
             .alert( isPresented: $hasError){
                 Alert(title: Text("Error") ,message: Text(errorMessage) )
@@ -178,8 +201,13 @@ struct ContentView: View {
                 }
                 FolderSelector(selectedFolder:selectedFolder,onChange:{
                     self.images=[]
-                    self.searchForImages()
                 })
+            }
+            .onDisappear {
+                if let prev = activeAccessedURL {
+                    prev.stopAccessingSecurityScopedResource()
+                    activeAccessedURL = nil
+                }
             }
         }
         

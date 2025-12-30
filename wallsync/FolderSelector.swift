@@ -7,6 +7,7 @@
 
 import SwiftUI
 import CoreData
+import AppKit
 
 
 
@@ -29,7 +30,13 @@ struct FolderSelector: View {
                 panel.allowsMultipleSelection = false
                 panel.canChooseDirectories = true
                 if panel.runModal() == .OK {
-                    self.selectedFolder.foldername = panel.url?.path ?? "<none>"
+                    if let url = panel.url {
+                        // Save security-scoped bookmark for later use
+                        RecentFolders.add(url: url)
+                        self.selectedFolder.foldername = url.path
+                    } else {
+                        self.selectedFolder.foldername = "<none>"
+                    }
                     onChange()
                 }
     }

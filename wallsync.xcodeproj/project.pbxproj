@@ -13,6 +13,7 @@
 		1F6028B327EB4737004EC720 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1F6028B227EB4737004EC720 /* Assets.xcassets */; };
 		1F6028B627EB4737004EC720 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1F6028B527EB4737004EC720 /* Preview Assets.xcassets */; };
 		1F6028C627EB575C004EC720 /* FolderSelector.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F6028C527EB575C004EC720 /* FolderSelector.swift */; };
+		742AAAD12F037CE600156C78 /* RecentFolders.swift in Sources */ = {isa = PBXBuildFile; fileRef = 742AAAD02F037CE600156C78 /* RecentFolders.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -24,6 +25,7 @@
 		1F6028B527EB4737004EC720 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		1F6028BC27EB4737004EC720 /* wallsync.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = wallsync.entitlements; sourceTree = "<group>"; };
 		1F6028C527EB575C004EC720 /* FolderSelector.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FolderSelector.swift; sourceTree = "<group>"; };
+		742AAAD02F037CE600156C78 /* RecentFolders.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecentFolders.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -58,6 +60,7 @@
 			children = (
 				1F6028AE27EB4736004EC720 /* wallsyncApp.swift */,
 				1F6028B027EB4736004EC720 /* ContentView.swift */,
+				742AAAD02F037CE600156C78 /* RecentFolders.swift */,
 				1F1F984028B27AB8009CDD84 /* RecursiveSearch.swift */,
 				1F6028B227EB4737004EC720 /* Assets.xcassets */,
 				1F6028BC27EB4737004EC720 /* wallsync.entitlements */,
@@ -149,6 +152,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				742AAAD12F037CE600156C78 /* RecentFolders.swift in Sources */,
 				1F6028B127EB4736004EC720 /* ContentView.swift in Sources */,
 				1F6028AF27EB4736004EC720 /* wallsyncApp.swift in Sources */,
 				1F1F984128B27AB8009CDD84 /* RecursiveSearch.swift in Sources */,

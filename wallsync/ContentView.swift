@@ -7,6 +7,7 @@
 
 import SwiftUI
 import CoreData
+import AppKit
 
 
 
@@ -51,12 +52,27 @@ struct ContentView: View {
     @State var sizeSort = 1
     @State var hasError = false
     @State var errorMessage=""
+
+    var folders = RecentFolders.list()
     
     var body: some View {
         ScrollViewReader{scrollProxy in
             VStack{
                 if(images.count == 0){
                     Text("Select a folder to scan").font(.title).foregroundColor(.gray)
+
+                    ForEach(folders, id: \.self) { folder in
+                        Button(action:{
+                            folder.startAccessingSecurityScopedResource()
+                            self.selectedFolder.foldername = folder.path
+                            self.images = []
+                            self.searchForImages()
+                            RecentFolders.add(url: folder)
+                        }){
+                            Text(folder.path).frame(maxWidth: .infinity, alignment: .leading).padding(EdgeInsets(top: 5, leading: 10, bottom: 5, trailing: 10))
+                        }.buttonStyle(PlainButtonStyle())
+                    }
+
                 }else{
                     ScrollView{
                         LazyVStack{
@@ -81,10 +97,10 @@ struct ContentView: View {
                                             EmptyView()
                                         }
                                     }
-                                    
+
                                     .aspectRatio( contentMode: .fit)
                                     .cornerRadius(6)
-                                    
+                                                                        
                                     
                                 }
                                 .id(imageCol.id)
@@ -211,6 +227,7 @@ struct ContentView: View {
         }
         
     }
+
     
     func sortByName(itemA:ImageCollection,itemB:ImageCollection,direction:Int)->Bool{
         if(direction == 1){

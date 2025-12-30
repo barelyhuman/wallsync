@@ -14,6 +14,9 @@
 		1F6028B627EB4737004EC720 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1F6028B527EB4737004EC720 /* Preview Assets.xcassets */; };
 		1F6028C627EB575C004EC720 /* FolderSelector.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F6028C527EB575C004EC720 /* FolderSelector.swift */; };
 		742AAAD12F037CE600156C78 /* RecentFolders.swift in Sources */ = {isa = PBXBuildFile; fileRef = 742AAAD02F037CE600156C78 /* RecentFolders.swift */; };
+		747DBFBA2F039A24006B9DCC /* Persistence.swift in Sources */ = {isa = PBXBuildFile; fileRef = 747DBFB92F039A24006B9DCC /* Persistence.swift */; };
+		747DBFBB2F039A24006B9DCC /* FolderManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 747DBFB82F039A24006B9DCC /* FolderManager.swift */; };
+		749EF9C22F039C9F005E85CA /* wallsync.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 749EF9C02F039C9F005E85CA /* wallsync.xcdatamodeld */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -26,6 +29,9 @@
 		1F6028BC27EB4737004EC720 /* wallsync.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = wallsync.entitlements; sourceTree = "<group>"; };
 		1F6028C527EB575C004EC720 /* FolderSelector.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FolderSelector.swift; sourceTree = "<group>"; };
 		742AAAD02F037CE600156C78 /* RecentFolders.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecentFolders.swift; sourceTree = "<group>"; };
+		747DBFB82F039A24006B9DCC /* FolderManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FolderManager.swift; sourceTree = "<group>"; };
+		747DBFB92F039A24006B9DCC /* Persistence.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Persistence.swift; sourceTree = "<group>"; };
+		749EF9C12F039C9F005E85CA /* wallsync.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = wallsync.xcdatamodel; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -60,6 +66,9 @@
 			children = (
 				1F6028AE27EB4736004EC720 /* wallsyncApp.swift */,
 				1F6028B027EB4736004EC720 /* ContentView.swift */,
+				747DBFB82F039A24006B9DCC /* FolderManager.swift */,
+				749EF9C02F039C9F005E85CA /* wallsync.xcdatamodeld */,
+				747DBFB92F039A24006B9DCC /* Persistence.swift */,
 				742AAAD02F037CE600156C78 /* RecentFolders.swift */,
 				1F1F984028B27AB8009CDD84 /* RecursiveSearch.swift */,
 				1F6028B227EB4737004EC720 /* Assets.xcassets */,
@@ -152,8 +161,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				747DBFBA2F039A24006B9DCC /* Persistence.swift in Sources */,
+				747DBFBB2F039A24006B9DCC /* FolderManager.swift in Sources */,
 				742AAAD12F037CE600156C78 /* RecentFolders.swift in Sources */,
 				1F6028B127EB4736004EC720 /* ContentView.swift in Sources */,
+				749EF9C22F039C9F005E85CA /* wallsync.xcdatamodeld in Sources */,
 				1F6028AF27EB4736004EC720 /* wallsyncApp.swift in Sources */,
 				1F1F984128B27AB8009CDD84 /* RecursiveSearch.swift in Sources */,
 				1F6028C627EB575C004EC720 /* FolderSelector.swift in Sources */,
@@ -354,6 +366,19 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCVersionGroup section */
+		749EF9C02F039C9F005E85CA /* wallsync.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				749EF9C12F039C9F005E85CA /* wallsync.xcdatamodel */,
+			);
+			currentVersion = 749EF9C12F039C9F005E85CA /* wallsync.xcdatamodel */;
+			path = wallsync.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
 	};
 	rootObject = 1F6028A327EB4736004EC720 /* Project object */;
 }

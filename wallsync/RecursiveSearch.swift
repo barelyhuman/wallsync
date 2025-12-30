@@ -33,12 +33,8 @@ func recursiveDirectorySearch(path: String)throws ->[ImageCollection] {
                         }
                         
                     case .typeDirectory:
-                        
-                        do{
-                            images.append(contentsOf: try recursiveDirectorySearch(path: item))
-                        }catch{
-                            throw error
-                        }
+                        // Skip - FileManager.enumerator already traverses subdirectories recursively
+                        break
                     default:
                         print("skipping...")
                     }

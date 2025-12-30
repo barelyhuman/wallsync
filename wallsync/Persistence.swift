@@ -13,18 +13,7 @@ struct PersistenceController {
     static var preview: PersistenceController = {
         let result = PersistenceController(inMemory: true)
         let viewContext = result.container.viewContext
-        for _ in 0..<10 {
-            let newItem = Item(context: viewContext)
-            newItem.timestamp = Date()
-        }
-        do {
-            try viewContext.save()
-        } catch {
-            // Replace this implementation with code to handle the error appropriately.
-            // fatalError() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
-            let nsError = error as NSError
-            fatalError("Unresolved error \(nsError), \(nsError.userInfo)")
-        }
+        // Preview with sample tracked folders
         return result
     }()
 
@@ -51,5 +40,43 @@ struct PersistenceController {
                 fatalError("Unresolved error \(error), \(error.userInfo)")
             }
         })
+        container.viewContext.automaticallyMergesChangesFromParent = true
+    }
+    
+    // MARK: - Tracked Folder Operations
+    
+    func addFolder(url: URL, bookmarkData: Data) throws {
+        let context = container.viewContext
+        
+        // Check if folder already exists by path
+        let fetchRequest: NSFetchRequest<TrackedFolder> = TrackedFolder.fetchRequest()
+        fetchRequest.predicate = NSPredicate(format: "path == %@", url.path)
+        
+        if let existing = try? context.fetch(fetchRequest).first {
+            // Folder already tracked, skip
+            return
+        }
+        
+        let folder = TrackedFolder(context: context)
+        folder.id = UUID()
+        folder.path = url.path
+        folder.bookmarkData = bookmarkData
+        folder.dateAdded = Date()
+        
+        try context.save()
+    }
+    
+    func removeFolder(_ folder: TrackedFolder) throws {
+        let context = container.viewContext
+        context.delete(folder)
+        try context.save()
+    }
+    
+    func fetchFolders() throws -> [TrackedFolder] {
+        let context = container.viewContext
+        let fetchRequest: NSFetchRequest<TrackedFolder> = TrackedFolder.fetchRequest()
+        fetchRequest.sortDescriptors = [NSSortDescriptor(keyPath: \TrackedFolder.dateAdded, ascending: true)]
+        
+        return try context.fetch(fetchRequest)
     }
 }

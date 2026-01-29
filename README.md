@@ -1,28 +1,34 @@
 # WallSync
 
-> Minimal wallpaper switcher for macOS
+> Automatic wallpaper sync for macOS 13+
 
 ![](/static/preview.png)
 
-## Why? 
+## Why?
 
-MacOS doesn't come with an option to set the wallpaper for more than one screen at the same time, this app wishes to accomplish that while being minimal.
+MacOS doesn't come with an option to set the wallpaper for more than one screen at the same time. WallSync runs in the background and automatically syncs your wallpaper across all displays whenever you change your wallpaper or connect a new screen.
 
 Also because of [this](https://justforfunnoreally.dev)
 
-## Installation 
+## How it works
 
-Because the app isn't signed with an apple account, you'll have to do a minor modification to the app **after copying it to the Applications folder** by running the following in your `Terminal`.
+WallSync runs as a background service that:
+
+- Automatically syncs wallpaper across all displays when you change your wallpaper
+- Detects when a new screen is connected and syncs the wallpaper to it
+- No manual intervention needed - just set it and forget it
+
+## Installation
+
+Because the app isn't signed with an apple account, you'll have to do a minor modification **after copying it to the Applications folder** by running the following in your `Terminal`.
 
 ```sh
 xattr -c /Applications/wallsync.app
 ```
 
-> This is normal for apps distributed outside the App Store, if you need signed apps, you might need to help me get a paid apple developer account. 
+> This is normal for apps distributed outside the App Store, if you need signed apps, you might need to help me get a paid apple developer account.
 
-
-### Caveats 
-- Both monitors need to be on the default workspaces and not in full screen apps as that doesn't work with the screen api being used internally with the app. 
+After installation, launch the app once to start the background service. It will continue running automatically
 
 ## Releases
 

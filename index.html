@@ -15,6 +15,15 @@
     />
     <meta property="og:image" content="static/preview.png" />
     <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://barelyhuman.github.io/wallsync/" />
+    <link rel="canonical" href="https://barelyhuman.github.io/wallsync/" />
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:title" content="WallSync" />
+    <meta
+      name="twitter:description"
+      content="Automatic wallpaper sync for macOS 13+"
+    />
+    <meta name="twitter:image" content="static/preview.png" />
     <link rel="icon" type="image/png" href="static/logo.png" />
     <style>
       *,
@@ -25,14 +34,46 @@
         box-sizing: border-box;
       }
 
-      :root {
+      :root,
+      [data-theme="light"] {
+        --bg: #fafafa;
+        --surface: #f0f0f0;
+        --border: #e0e0e0;
+        --text: #171717;
+        --text-muted: #737373;
+        --accent: #059669;
+        --accent-dim: rgba(5, 150, 105, 0.08);
+        --btn-primary-text: #fff;
+        --shadow: rgba(0, 0, 0, 0.08);
+        --code-bg: #f5f5f5;
+      }
+
+      @media (prefers-color-scheme: dark) {
+        :root:not([data-theme="light"]) {
+          --bg: #0a0a0a;
+          --surface: #141414;
+          --border: #222;
+          --text: #e5e5e5;
+          --text-muted: #a3a3a3;
+          --accent: #34d399;
+          --accent-dim: rgba(52, 211, 153, 0.1);
+          --btn-primary-text: #0a0a0a;
+          --shadow: rgba(0, 0, 0, 0.4);
+          --code-bg: #141414;
+        }
+      }
+
+      [data-theme="dark"] {
         --bg: #0a0a0a;
         --surface: #141414;
         --border: #222;
         --text: #e5e5e5;
-        --text-muted: #737373;
+        --text-muted: #a3a3a3;
         --accent: #34d399;
         --accent-dim: rgba(52, 211, 153, 0.1);
+        --btn-primary-text: #0a0a0a;
+        --shadow: rgba(0, 0, 0, 0.4);
+        --code-bg: #141414;
       }
 
       body {
@@ -64,6 +105,7 @@
       nav {
         padding: 20px 0;
         border-bottom: 1px solid var(--border);
+        min-height: 68px;
       }
 
       nav .container {
@@ -105,6 +147,75 @@
       .nav-links a:hover {
         color: var(--text);
         text-decoration: none;
+      }
+
+      .theme-toggle {
+        background: none;
+        border: 1px solid var(--border);
+        border-radius: 8px;
+        cursor: pointer;
+        width: 28px;
+        height: 28px;
+        padding: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-shrink: 0;
+        color: var(--text-muted);
+        transition:
+          color 0.15s,
+          border-color 0.15s,
+          background-color 0.15s;
+      }
+
+      .theme-toggle:hover {
+        color: var(--text);
+        border-color: var(--text-muted);
+      }
+
+      .theme-toggle svg {
+        width: 14px;
+        height: 14px;
+        display: block;
+      }
+
+      .theme-toggle .icon-moon {
+        display: block;
+      }
+
+      .theme-toggle .icon-sun {
+        display: none;
+      }
+
+      /* Keep icon slot fixed so toggling doesn’t shift layout */
+      .theme-toggle .icon-sun,
+      .theme-toggle .icon-moon {
+        flex-shrink: 0;
+      }
+
+      @media (prefers-color-scheme: dark) {
+        :root:not([data-theme="light"]) .theme-toggle .icon-moon {
+          display: none;
+        }
+        :root:not([data-theme="light"]) .theme-toggle .icon-sun {
+          display: block;
+        }
+      }
+
+      [data-theme="dark"] .theme-toggle .icon-moon {
+        display: none;
+      }
+
+      [data-theme="dark"] .theme-toggle .icon-sun {
+        display: block;
+      }
+
+      [data-theme="light"] .theme-toggle .icon-moon {
+        display: block;
+      }
+
+      [data-theme="light"] .theme-toggle .icon-sun {
+        display: none;
       }
 
       /* Hero */
@@ -149,7 +260,7 @@
 
       .btn-primary {
         background: var(--accent);
-        color: #0a0a0a;
+        color: var(--btn-primary-text);
       }
 
       .btn-primary:hover {
@@ -165,13 +276,32 @@
 
       .btn-secondary:hover {
         color: var(--text);
-        border-color: #444;
+        border-color: var(--text-muted);
         text-decoration: none;
       }
 
       .btn svg {
         width: 16px;
         height: 16px;
+      }
+
+      .hero-meta {
+        display: flex;
+        gap: 12px;
+        justify-content: center;
+        margin-top: 16px;
+        font-size: 12px;
+        color: var(--text-muted);
+      }
+
+      .hero-meta span {
+        display: inline-flex;
+        align-items: center;
+        gap: 5px;
+        padding: 4px 10px;
+        border-radius: 20px;
+        border: 1px solid var(--border);
+        background: var(--surface);
       }
 
       /* Preview */
@@ -183,7 +313,7 @@
       .preview img {
         border-radius: 12px;
         border: 1px solid var(--border);
-        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+        box-shadow: 0 8px 32px var(--shadow);
         max-width: 320px;
         width: 100%;
       }
@@ -297,7 +427,7 @@
       }
 
       .code-block {
-        background: var(--surface);
+        background: var(--code-bg);
         border: 1px solid var(--border);
         border-radius: 6px;
         padding: 10px 14px;
@@ -380,6 +510,42 @@
           <a href="https://github.com/barelyhuman/wallsync/releases"
             >Releases</a
           >
+          <button
+            class="theme-toggle"
+            aria-label="Toggle theme"
+            onclick="toggleTheme()"
+          >
+            <svg
+              class="icon-sun"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
+              <circle cx="12" cy="12" r="5" />
+              <line x1="12" y1="1" x2="12" y2="3" />
+              <line x1="12" y1="21" x2="12" y2="23" />
+              <line x1="4.22" y1="4.22" x2="5.64" y2="5.64" />
+              <line x1="18.36" y1="18.36" x2="19.78" y2="19.78" />
+              <line x1="1" y1="12" x2="3" y2="12" />
+              <line x1="21" y1="12" x2="23" y2="12" />
+              <line x1="4.22" y1="19.78" x2="5.64" y2="18.36" />
+              <line x1="18.36" y1="5.64" x2="19.78" y2="4.22" />
+            </svg>
+            <svg
+              class="icon-moon"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
+              <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" />
+            </svg>
+          </button>
         </div>
       </div>
     </nav>
@@ -431,6 +597,11 @@
               </svg>
               GitHub
             </a>
+          </div>
+          <div class="hero-meta">
+            <span>v1.0.0</span>
+            <span>macOS 13+</span>
+            <span>MIT License</span>
           </div>
         </div>
       </section>
@@ -611,9 +782,36 @@
           <a href="https://github.com/barelyhuman/wallsync/releases"
             >Releases</a
           >
-          <a href="https://github.com/barelyhuman/wallsync/issues">Issues</a>
+          <a href="https://github.com/sponsors/barelyhuman">Issues</a>
         </div>
       </div>
     </footer>
+    <script>
+      function getSystemTheme() {
+        return window.matchMedia("(prefers-color-scheme: dark)").matches
+          ? "dark"
+          : "light";
+      }
+
+      function getEffectiveTheme() {
+        return localStorage.getItem("theme") || null;
+      }
+
+      function toggleTheme() {
+        var current =
+          document.documentElement.getAttribute("data-theme") ||
+          getSystemTheme();
+        var next = current === "dark" ? "light" : "dark";
+        document.documentElement.setAttribute("data-theme", next);
+        localStorage.setItem("theme", next);
+      }
+
+      (function () {
+        var saved = getEffectiveTheme();
+        if (saved) {
+          document.documentElement.setAttribute("data-theme", saved);
+        }
+      })();
+    </script>
   </body>
 </html>
